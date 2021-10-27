@@ -20,10 +20,10 @@ trait CommonControllerTrait
         return [
             'data' => $content->jsonSerialize(),
             'meta' => [
-                'currentPage' => $content->currentPage(),
+                'current_page' => $content->currentPage(),
                 'from' => $content->firstItem(),
-                'lastPage' => $content->lastPage(),
-                'perPage' => (int)$content->perPage(),
+                'last_page' => $content->lastPage(),
+                'per_page' => (int)$content->perPage(),
                 'to' => $content->lastItem(),
                 'total' => $content->total()
             ]

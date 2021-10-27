@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  description: Orders
+  version: "1.0.0"
+  title: Orders
+servers:
+  - url: 'http://localhost/api'
+tags:
+  - name: orders
+paths:
+  /orders:
+    post:
+      tags:
+        - orders
+      summary: Создать заказ
+      operationId: addOrder
+      requestBody:
+        $ref: '#/components/requestBodies/OrderRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResource'
+
+
+
+
+    get:
+      tags:
+        - orders
+      summary: Получить список заказов
+      operationId: orderList
+      responses:
+        '201':
+          description: list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrdersPaginate"
+  /orders/{id}:
+    put:
+      tags:
+        - orders
+      parameters:
+        - name: id
+          in: path
+          description: id заказа
+          required: true
+          schema:
+            type: integer
+      summary: Изменить заказ
+      operationId: updateOrder
+      responses:
+        '200':
+          description: updated
+      requestBody:
+        $ref: '#/components/requestBodies/OrderRequest'
+    get:
+      tags:
+        - orders
+      parameters:
+        - name: id
+          in: path
+          description: id заказа
+          required: true
+          schema:
+            type: integer
+      summary: заказ
+      operationId: showOrder
+      responses:
+        '200':
+          description: show order
+
+
+
+
+
+
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        user_full_name:
+          type: string
+        price:
+          type: integer
+        address:
+          type: string
+
+    OrderResource:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_full_name:
+          type: string
+        price:
+          type: integer
+        address:
+          type: string
+        created_at:
+          type: string
+
+    OrdersPaginate:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderResource'
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            from:
+              type: integer
+            last_page:
+              type: integer
+            per_page:
+              type: integer
+            to:
+              type: integer
+            total:
+              type: integer
+
+  requestBodies:
+    OrderRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+      required: true
